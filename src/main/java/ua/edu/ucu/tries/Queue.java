@@ -2,20 +2,21 @@ package ua.edu.ucu.tries;
 
 
 public class Queue<T> {
-    private int value = 0;
+    private int size = 0;
     private Node<T> main;
+   
 
     public Queue() {}
 
-    public void enstack(T data) {
+    public void enqueue(T data) {
         main = new Node<T>(data, main);
-        value++;
+        size++;
     }
 
-    public Object destack() {
+    public Object dequeue() {
         Node<T> before = null;
         Node<T> current = main;
-        value--;
+        size--;
         if (main.getNext() == null) {
             main = null;
             return current.getData();
@@ -31,35 +32,36 @@ public class Queue<T> {
 
     }
 
-    public String[] toStack() {
-        String[] stack = new String[value];
+    public String[] toArray() {
+        String[] array = new String[size];
         int j = 0;
         Node<T> current = main;
         while (current != null) {
-            stack[j] = (String) current.getData();
+            array[j] = (String) current.getData();
             j++;
             current = current.getNext();
         }
-        return stack;
+        return array;
     }
 
 
     static class Node<T> {
-        private T database;
         private Node<T> next;
+        private T data;
 
 
-        public Node(T database, Node<T> next) {
-            this.database = database;
+        public Node(T data, Node<T> next) {
             this.next = next;
+            this.data = data;
+
         }
 
         public T getData() {
-            return database;
+            return data;
         }
 
-        public void setData(T database) {
-            this.database = database;
+        public void setData(T data) {
+            this.data = data;
         }
 
         public Node<T> getNext() {
