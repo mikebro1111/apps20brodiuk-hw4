@@ -2,14 +2,15 @@ package ua.edu.ucu.autocomplete;
 
 import ua.edu.ucu.tries.Trie;
 import ua.edu.ucu.tries.Tuple;
+
 import java.util.ArrayList;
 import java.util.Arrays;
-
 
 /**
  *
  * @author andrii
  */
+
 public class PrefixMatches {
 
     private Trie trie;
@@ -19,15 +20,15 @@ public class PrefixMatches {
     }
 
     public int load(String... strings) {
-        int i = 0;
-        for (String str: strings)
-            for (String word: str.split(" "))
+        int j = 0;
+        for (String s: strings)
+            for (String word: s.split(" "))
                 if (word.length() > 2 && !contains(word)) {
-                    Tuple tup = new Tuple(word, word.length());
-                    trie.add(tup);
-                    i++;
+                    Tuple t = new Tuple(word, word.length());
+                    trie.add(t);
+                    j++;
                 }
-        return i;
+        return j;
     }
 
     public boolean contains(String word) {
@@ -43,19 +44,19 @@ public class PrefixMatches {
     }
 
     public Iterable<String> wordsWithPrefix(String pref, int k) {
-        ArrayList<String> res = new ArrayList<>();
-        int current_len = 0;
+        ArrayList<String> result = new ArrayList<>();
         int len1 = 0;
+        int current_len = 0;
         for (String word : trie.wordsWithPrefix(pref)) {
             if (word.length() != current_len) {
                 len1++;
                 current_len = word.length();
             }
             if (len1 > k) break;
-            res.add(word);
+            result.add(word);
         }
-        String[] result = Arrays.copyOf(res.toArray(), res.toArray().length, String[].class);
-        return () -> Arrays.stream(result).iterator();        
+        String[] res = Arrays.copyOf(result.toArray(), result.toArray().length, String[].class);
+        return () -> Arrays.stream(res).iterator();
     }
 
     public int size() {
